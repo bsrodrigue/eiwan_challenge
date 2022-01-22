@@ -1,13 +1,18 @@
-import React from 'react';
-import { Box, AppBar, Toolbar, IconButton, Typography, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, AppBar, Toolbar, IconButton, Typography, Button, Drawer, Divider, Avatar } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 interface Props {
 
 }
 
-const ToggleButton = () => {
+interface ToggleButtonProps {
+  onClick: any;
+}
+const ToggleButton: React.FC<ToggleButtonProps> = (props: ToggleButtonProps) => {
+  const { onClick } = props;
   return (
     <IconButton
+      onClick={onClick}
       size="large"
       edge="start"
       color="inherit"
@@ -18,12 +23,34 @@ const ToggleButton = () => {
   );
 };
 
+const Sidebar: React.FC = () => {
+
+  return (
+    <Box sx={{ margin: "1em" }}>
+
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Avatar />
+        <Typography>
+          Young Flemmosian
+        </Typography>
+      </Box>
+
+      <Divider />
+
+    </Box>
+  );
+}
+
 const App: React.FC<Props> = () => {
+  // States
+  const [SidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);
+
+
   return (
     <Box>
       <AppBar position="static">
         <Toolbar>
-          <ToggleButton />
+          <ToggleButton onClick={() => { setSidebarIsOpen(true) }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Eiwan Challenge!
           </Typography>
@@ -31,6 +58,10 @@ const App: React.FC<Props> = () => {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
+
+      <Drawer anchor="left" open={SidebarIsOpen} onClose={() => { setSidebarIsOpen(false) }}>
+        <Sidebar />
+      </Drawer>
     </Box>
   );
 }

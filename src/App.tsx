@@ -25,14 +25,12 @@ const App: React.FC<Props> = () => {
         <Toolbar>
           <ToggleButton />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Eiwan Challenge!
           </Typography>
+          <Button color="inherit">Register</Button>
           <Button color="inherit">Login</Button>
         </Toolbar>
-
       </AppBar>
-
-
     </Box>
   );
 }

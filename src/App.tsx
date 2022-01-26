@@ -2,6 +2,9 @@ import { AppBar, Box, Button, Drawer, Toolbar, Typography } from '@mui/material'
 import React, { useState } from 'react';
 
 import { Sidebar, ToggleButton } from './global/components';
+import Login from './pages/auth/login';
+import Register from './pages/auth/register';
+
 
 interface Props { }
 const App: React.FC<Props> = () => {
@@ -21,10 +24,16 @@ const App: React.FC<Props> = () => {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-
       <Drawer anchor="left" open={SidebarIsOpen} onClose={() => { setSidebarIsOpen(false) }}>
         <Sidebar />
       </Drawer>
+
+      {/* Page Content */}
+      <Box sx={{ padding: 1 }}>
+        <Register />
+      </Box>
+
+
     </Box>
   );
 }

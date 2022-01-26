@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, AppBar, Toolbar, IconButton, Typography, Button, Drawer, Divider, Avatar } from '@mui/material';
+import { Box, AppBar, Toolbar, IconButton, Typography, Button, Drawer, Divider, Avatar, ListItem, List, ListItemText } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 interface Props {
 
@@ -37,6 +37,16 @@ const Sidebar: React.FC = () => {
 
       <Divider />
 
+      <List>
+        {["Home", "Challenges", "Notifications", "Profile"].map((title, index) => {
+          return (<ListItem button key={index}>
+            <ListItemText>
+              {title}
+            </ListItemText>
+          </ListItem>);
+        })}
+      </List>
+
     </Box>
   );
 }
@@ -51,7 +61,7 @@ const App: React.FC<Props> = () => {
       <AppBar position="static">
         <Toolbar>
           <ToggleButton onClick={() => { setSidebarIsOpen(true) }} />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography component="div" sx={{ flexGrow: 1 }}>
             Eiwan Challenge!
           </Typography>
           <Button color="inherit">Register</Button>

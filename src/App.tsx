@@ -1,9 +1,8 @@
 import { AppBar, Box, Button, Drawer, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 
 import { Sidebar, ToggleButton } from './global/components';
-import Login from './pages/auth/login';
-import Register from './pages/auth/register';
 
 
 interface Props { }
@@ -20,8 +19,12 @@ const App: React.FC<Props> = () => {
           <Typography component="div" sx={{ flexGrow: 1 }}>
             Eiwan Challenge!
           </Typography>
-          <Button color="inherit">Register</Button>
-          <Button color="inherit">Login</Button>
+          <Link to="/auth/register">
+            <Button color="inherit">Register</Button>
+          </Link>
+          <Link to="/auth/login">
+            <Button color="inherit">Login</Button>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={SidebarIsOpen} onClose={() => { setSidebarIsOpen(false) }}>
@@ -30,7 +33,7 @@ const App: React.FC<Props> = () => {
 
       {/* Page Content */}
       <Box sx={{ padding: 1 }}>
-        <Login />
+        <Outlet />
       </Box>
 
 

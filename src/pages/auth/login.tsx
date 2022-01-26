@@ -1,6 +1,7 @@
 import { TextField, Button, CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 
+import { toast } from 'react-toastify';
 import { supabase } from '../../lib/supabase/client';
 
 const Login: React.FC = () => {
@@ -24,10 +25,13 @@ const Login: React.FC = () => {
                 email, password,
             });
             if (error) throw error;
+            toast.success("Successfully logged in");
             console.table(user);
             console.table(session);
 
-        } catch (e) {
+        } catch (e: any) {
+            const message = e?.message;
+            toast.error(message);
             console.error("Error while login: ", e);
         }
         finally {

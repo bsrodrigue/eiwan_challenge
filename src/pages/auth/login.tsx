@@ -1,3 +1,4 @@
+import { TextField, Button, CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { supabase } from '../../lib/supabase/client';
@@ -38,14 +39,15 @@ const Login: React.FC = () => {
 
 
     return (
-        <form id='login-form' >
-            <label htmlFor="email">Email:</label>
-            <input type="text" name="email" onChange={(e) => { setEmail(e.target.value) }} />
-            <label htmlFor="password">Password:</label>
-            <input type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} />
+        <>
+            <TextField margin='dense' label="Email" fullWidth onChange={(e) => { setEmail(e.target.value) }} />
+            <TextField margin='dense' label="Password" fullWidth onChange={(e) => { setPassword(e.target.value) }} />
 
-            <input type="button" onClick={submit} value={loading ? 'Loading...' : 'Login'} />
-        </form>
+            <Button fullWidth variant='contained' onClick={submit}  >
+                {loading && (<CircularProgress sx={{ color: 'white', margin: '0 1em' }} size="1em" />)}
+                {loading ? 'Logging in...' : 'Login'}
+            </Button>
+        </>
     )
 }
 

@@ -1,3 +1,4 @@
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { supabase } from '../../lib/supabase/client';
@@ -19,15 +20,21 @@ const Register: React.FC = () => {
 
         try {
             setLoading(true);
-            const { user, session, error } = await supabase.auth.signUp({
+            const { error } = await supabase.auth.signUp({
                 email, password,
             });
             if (error) throw error;
-            console.table(user);
-            console.table(session);
+            try {
+                const { error } = await supabase.auth.signIn({
+                    email, password,
+                });
+                if (error) throw error;
+            } catch (e) {
+                console.error("Error while login: ", e);
+            }
 
         } catch (e) {
-            console.error("Error while login: ", e);
+            console.error("Error while register: ", e);
         }
         finally {
             setLoading(false);
@@ -38,14 +45,15 @@ const Register: React.FC = () => {
 
 
     return (
-        <form id='login-form' >
-            <label htmlFor="email">Email:</label>
-            <input type="text" name="email" onChange={(e) => { setEmail(e.target.value) }} />
-            <label htmlFor="password">Password:</label>
-            <input type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} />
+        <>
+            <TextField margin='dense' label="Email" fullWidth onChange={(e) => { setEmail(e.target.value) }} />
+            <TextField margin='dense' label="Password" fullWidth onChange={(e) => { setPassword(e.target.value) }} />
 
-            <input type="button" onClick={submit} value={loading ? 'Loading...' : 'Register'} />
-        </form>
+            <Button fullWidth variant='contained' onClick={submit}  >
+                {loading && (<CircularProgress />)}
+                {loading ? 'Registration...' : 'Register'}
+            </Button>
+        </>
     )
 }
 

@@ -30,7 +30,7 @@ const App: React.FC<Props> = () => {
 
       {/* Page Content */}
       <Box sx={{ padding: 1 }}>
-        <Register />
+        <Login />
       </Box>
 
 

@@ -1,8 +1,9 @@
 import { AppBar, Box, Button, Drawer, Toolbar, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
 import { Sidebar, ToggleButton } from './global/components';
+import { useCookies } from 'react-cookie';
 
 
 interface Props { }
@@ -10,6 +11,19 @@ const App: React.FC<Props> = () => {
   // States
   const [SidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);
 
+  // Hooks
+  const [cookies, setCookie, removeCookie] = useCookies(['auth']);
+
+  // Values
+  const token = cookies?.auth?.session?.access_token;
+  const user = cookies?.auth?.user;
+
+  const isAuthenticated = token;
+
+
+  const logout = () => {
+    removeCookie("auth", { path: "/" });
+  }
 
   return (
     <Box>
@@ -19,15 +33,30 @@ const App: React.FC<Props> = () => {
           <Typography component="div" sx={{ flexGrow: 1 }}>
             Eiwan Challenge!
           </Typography>
-          <Link to="/auth/register">
-            <Button color="inherit">Register</Button>
-          </Link>
-          <Link to="/auth/login">
-            <Button color="inherit">Login</Button>
-          </Link>
+
+
+          {
+            isAuthenticated ? (
+              <>
+                <Button onClick={logout} color="inherit">Logout</Button>
+              </>
+            ) : (
+              <>
+                <Link to="/auth/register">
+                  <Button color="inherit">Register</Button>
+                </Link>
+                <Link to="/auth/login">
+                  <Button color="inherit">Login</Button>
+                </Link>
+              </>
+            )
+          }
+
         </Toolbar>
       </AppBar>
-      <Drawer anchor="left" open={SidebarIsOpen} onClose={() => { setSidebarIsOpen(false) }}>
+      <Drawer anchor="left" open={SidebarIsOpen} onClose={() => {
+        setSidebarIsOpen(false)
+      }}>
         <Sidebar />
       </Drawer>
 

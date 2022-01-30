@@ -1,7 +1,9 @@
-import { TextField, Button, CircularProgress } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { supabase } from '../../lib/supabase/client';
 
 const Login: React.FC = () => {
@@ -9,6 +11,11 @@ const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+
+
+    // Hooks
+    const navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies(['auth']);
 
 
     const submit = async (e: any) => {
@@ -26,8 +33,12 @@ const Login: React.FC = () => {
             });
             if (error) throw error;
             toast.success("Successfully logged in");
-            console.table(user);
-            console.table(session);
+            setCookie("auth", {
+                user, session
+            }, {
+                path: '/',
+            });
+            navigate("/");
 
         } catch (e: any) {
             const message = e?.message;

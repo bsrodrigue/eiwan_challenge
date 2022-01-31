@@ -11,6 +11,7 @@ import { CookiesProvider } from 'react-cookie';
 import App from './App';
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
+import ChallengeForm from './pages/dashboard/challenge_form';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.render(
           <Route path='/' element={<App />}>
             <Route path="/auth/register" element={<Register />} />
             <Route path="/auth/login" element={<Login />} />
+            <Route path="/challenges/new" element={<ChallengeForm />} />
           </Route>
         </Routes>
         <ToastContainer />

@@ -12,11 +12,9 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
-
     // Hooks
     const navigate = useNavigate();
     const [cookies, setCookie, removeCookie] = useCookies(['auth']);
-
 
     const submit = async (e: any) => {
         e.preventDefault();
@@ -45,6 +43,7 @@ const Login: React.FC = () => {
             toast.error(message);
             console.error("Error while login: ", e);
         }
+
         finally {
             setLoading(false);
         }
@@ -60,7 +59,7 @@ const Login: React.FC = () => {
 
             <Button fullWidth variant='contained' onClick={submit}  >
                 {loading && (<CircularProgress sx={{ color: 'white', margin: '0 1em' }} size="1em" />)}
-                {loading ? 'Logging in...' : 'Login'}
+                {loading ? 'Login...' : 'Login'}
             </Button>
         </>
     )

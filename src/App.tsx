@@ -1,6 +1,6 @@
 import { AppBar, Box, Button, Drawer, Toolbar, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import { Sidebar, ToggleButton } from './global/components';
 import { useCookies } from 'react-cookie';
@@ -13,6 +13,7 @@ const App: React.FC<Props> = () => {
 
   // Hooks
   const [cookies, setCookie, removeCookie] = useCookies(['auth']);
+  const navigate = useNavigate();
 
   // Values
   const token = cookies?.auth?.session?.access_token;
@@ -23,6 +24,7 @@ const App: React.FC<Props> = () => {
 
   const logout = () => {
     removeCookie("auth", { path: "/" });
+    navigate("/auth/login");
   }
 
   return (

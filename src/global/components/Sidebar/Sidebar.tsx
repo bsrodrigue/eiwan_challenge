@@ -33,6 +33,7 @@ export const Sidebar: React.FC = () => {
     // Values
     const token = cookies?.auth?.session?.access_token;
     const user = cookies?.auth?.user;
+    const profile = cookies?.auth?.profile;
 
     const isAuthenticated = token;
 
@@ -41,9 +42,7 @@ export const Sidebar: React.FC = () => {
 
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Avatar />
-                <Typography>
-                    Young Flemmosian
-                </Typography>
+                <Typography>{profile?.username || "Anonymous"}</Typography>
             </Box>
 
             <Divider />

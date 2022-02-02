@@ -1,24 +1,29 @@
-import { Button, CircularProgress, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { createChallenge } from '../../api/challenge';
 import { Challenge } from '../../interfaces/models';
 import { supabase } from '../../lib/supabase/client';
 
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+
 const ChallengeForm: React.FC = () => {
     // States
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [title, setTitle] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [startDate, setStartDate] = useState<Date>(new Date());
+    const [endDate, setEndDate] = useState<Date>(new Date());
+    const [supervisor, setSupervisor] = useState<string>('');
+    const [validators, setValidators] = useState<string>('');
+    const [challenger, setChallenger] = useState<string>('');
+
+
     const [loading, setLoading] = useState<boolean>(false);
 
 
     const submit = async (e: any) => {
         e.preventDefault();
-
-        // if (email === "" && password === "") {
-        //     console.log("Please provide email and password");
-        //     return;
-        // }
 
         try {
             setLoading(true);
@@ -27,16 +32,16 @@ const ChallengeForm: React.FC = () => {
 
             user && await createChallenge(
                 {
-                    title: "Draw a sticker pack for A-One Team",
-                    description: "The challenger must create a whatsapp sticker pack based on A-One Team",
-                    start_date: new Date(),
-                    end_date: new Date(),
-                    author: user?.id,
+                    title,
+                    description,
+                    start_date: startDate,
+                    end_date: endDate,
                     supervisors: user?.id,
                     validators: user?.id,
+                    challenger: user?.id,
+                    author: user?.id,
                     status: "pending",
                     is_completed: false,
-                    challenger: user?.id,
                 }
 
             );
@@ -54,9 +59,43 @@ const ChallengeForm: React.FC = () => {
 
     return (
         <>
-            <TextField margin='dense' label="Email" fullWidth onChange={(e) => { setEmail(e.target.value) }} />
-            <TextField margin='dense' label="Password" fullWidth onChange={(e) => { setPassword(e.target.value) }} />
+            {/*  Text */}
+            <TextField margin='dense' label="Title" fullWidth onChange={(e) => { setTitle(e.target.value) }} />
+            <TextField margin='dense' label="Description" fullWidth onChange={(e) => { setDescription(e.target.value) }} />
 
+            <FormControl margin='dense' fullWidth>
+                <InputLabel>Challenger</InputLabel>
+                <Select
+                    label="Challenger"
+                    value={challenger}
+                    onChange={(e) => { setChallenger(e.target.value) }}
+                    displayEmpty
+                    inputProps={{ 'aria-label': 'Without label' }}
+                >
+                    <MenuItem value={30}>BADINI Rachid Rodrigue</MenuItem>
+                </Select>
+            </FormControl>
+
+            <FormControl margin='dense' fullWidth>
+                <InputLabel>Challenger</InputLabel>
+                <Select
+                    label="Challenger"
+                    value={null}
+                    onChange={() => { }}
+                    displayEmpty
+                    inputProps={{ 'aria-label': 'Without label' }}
+                >
+                    <MenuItem value={30}>BADINI Rachid Rodrigue</MenuItem>
+                </Select>
+            </FormControl>
+
+            {/*  Dates */}
+            <Box margin='dense' >
+                <DatePicker selected={startDate} onChange={(date) => { date && setStartDate(date) }} />
+            </Box>
+            <Box margin='dense' >
+                <DatePicker selected={endDate} onChange={(date) => { date && setEndDate(date) }} />
+            </Box>
             <Button fullWidth variant='contained' onClick={submit}  >
                 {loading && (<CircularProgress />)}
                 {loading ? 'Creating new Challenge...' : 'Create'}

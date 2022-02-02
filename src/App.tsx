@@ -18,6 +18,7 @@ const App: React.FC<Props> = () => {
   // Values
   const token = cookies?.auth?.session?.access_token;
   const user = cookies?.auth?.user;
+  const profile = cookies?.auth?.profile;
 
   const isAuthenticated = token;
 

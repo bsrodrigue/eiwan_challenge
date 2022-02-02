@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { getUserProfile } from '../../api/user_profile';
 
 import { supabase } from '../../lib/supabase/client';
 
@@ -31,12 +32,15 @@ const Login: React.FC = () => {
             });
             if (error) throw error;
             toast.success("Successfully logged in");
-            setCookie("auth", {
-                user, session
-            }, {
-                path: '/',
-            });
-            navigate("/");
+            if (user) {
+                const profile = await getUserProfile(user?.id);
+                setCookie("auth", {
+                    user, session, profile
+                }, {
+                    path: '/',
+                });
+                navigate("/");
+            }
 
         } catch (e: any) {
             const message = e?.message;

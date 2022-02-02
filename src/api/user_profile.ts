@@ -1,7 +1,7 @@
-import { User } from '../interfaces/auth';
+import { UserProfile } from '../interfaces/auth';
 import { supabase } from '../lib/supabase/client';
 
-export const createUserProfile = async (user: User) => {
+export const createUserProfile = async (user: UserProfile) => {
     try {
 
         const { data, error } = await supabase.from("user_profiles").insert(
@@ -28,5 +28,19 @@ export const getUserProfile = async (user_id: string) => {
 
     } catch (error) {
         console.error("Error while requesting user profile: ", error);
+    }
+}
+
+export const getUserProfiles = async (): Promise<UserProfile[] | undefined> => {
+    try {
+
+        const { data, error } = await supabase.from("user_profiles")
+            .select("*");
+
+        if (error) throw error;
+        if (data) return data as UserProfile[];
+
+    } catch (error) {
+        console.error("Error while requesting user profiles: ", error);
     }
 }

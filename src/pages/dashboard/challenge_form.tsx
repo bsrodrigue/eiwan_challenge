@@ -1,12 +1,13 @@
+import 'react-datepicker/dist/react-datepicker.css';
+
 import { Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
 
 import { createChallenge } from '../../api/challenge';
-import { Challenge } from '../../interfaces/models';
 import { supabase } from '../../lib/supabase/client';
-
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import { useUserProfiles } from '../../hooks/useUserProfiles';
+import { UserProfile } from '../../interfaces/auth';
 
 const ChallengeForm: React.FC = () => {
     // States
@@ -17,10 +18,11 @@ const ChallengeForm: React.FC = () => {
     const [supervisor, setSupervisor] = useState<string>('');
     const [validators, setValidators] = useState<string>('');
     const [challenger, setChallenger] = useState<string>('');
-
-
     const [loading, setLoading] = useState<boolean>(false);
 
+
+    // Hooks
+    const profiles = useUserProfiles();
 
     const submit = async (e: any) => {
         e.preventDefault();
@@ -72,7 +74,13 @@ const ChallengeForm: React.FC = () => {
                     displayEmpty
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
-                    <MenuItem value={30}>BADINI Rachid Rodrigue</MenuItem>
+                    {
+                        profiles.map((profile: UserProfile, index: number) => {
+                            return (
+                                <MenuItem value={profile.id}>{profile.username}</MenuItem>
+                            )
+                        })
+                    }
                 </Select>
             </FormControl>
 

@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 
 import { createChallenge } from '../../api/challenge';
-import { supabase } from '../../lib/supabase/client';
 import { useUserProfiles } from '../../hooks/useUserProfiles';
 import { UserProfile } from '../../interfaces/auth';
+import { supabase } from '../../lib/supabase/client';
 
 const ChallengeForm: React.FC = () => {
     // States
@@ -15,8 +15,8 @@ const ChallengeForm: React.FC = () => {
     const [description, setDescription] = useState<string>('');
     const [startDate, setStartDate] = useState<Date>(new Date());
     const [endDate, setEndDate] = useState<Date>(new Date());
-    const [supervisor, setSupervisor] = useState<string>('');
-    const [validators, setValidators] = useState<string>('');
+    // const [supervisor, setSupervisor] = useState<string>('');
+    // const [validators, setValidators] = useState<string>('');
     const [challenger, setChallenger] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 

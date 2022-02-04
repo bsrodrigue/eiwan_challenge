@@ -1,9 +1,11 @@
+import 'react-perfect-scrollbar/dist/css/styles.css';
+
 import { AppBar, Box, Button, Drawer, Toolbar, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import { Sidebar, ToggleButton } from './global/components';
-import { useCookies } from 'react-cookie';
 
 
 interface Props { }
@@ -30,7 +32,7 @@ const App: React.FC<Props> = () => {
 
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <ToggleButton onClick={() => { setSidebarIsOpen(true) }} />
           <Typography component="div" sx={{ flexGrow: 1 }}>
@@ -64,7 +66,7 @@ const App: React.FC<Props> = () => {
       </Drawer>
 
       {/* Page Content */}
-      <Box sx={{ padding: 1, backgroundColor: 'dimgrey' }}>
+      <Box sx={{ padding: 1, marginTop: 6 }}>
         <Outlet />
       </Box>
 

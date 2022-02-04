@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const sidebarLinks = [
     {
         title: "Home",
-        to: "/home",
+        to: "/",
         auth: true,
     },
     {

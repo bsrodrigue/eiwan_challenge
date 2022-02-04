@@ -40,7 +40,7 @@ const ChallengeForm: React.FC = () => {
                     end_date: endDate,
                     supervisors: user?.id,
                     validators: user?.id,
-                    challenger: user?.id,
+                    challenger,
                     author: user?.id,
                     status: "pending",
                     is_completed: false,
@@ -77,25 +77,13 @@ const ChallengeForm: React.FC = () => {
                     {
                         profiles.map((profile: UserProfile, index: number) => {
                             return (
-                                <MenuItem value={profile.id}>{profile.username}</MenuItem>
+                                <MenuItem key={index} value={profile.user_id}>{profile.username}</MenuItem>
                             )
                         })
                     }
                 </Select>
             </FormControl>
 
-            <FormControl margin='dense' fullWidth>
-                <InputLabel>Challenger</InputLabel>
-                <Select
-                    label="Challenger"
-                    value={null}
-                    onChange={() => { }}
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                >
-                    <MenuItem value={30}>BADINI Rachid Rodrigue</MenuItem>
-                </Select>
-            </FormControl>
 
             {/*  Dates */}
             <Box margin='dense' >

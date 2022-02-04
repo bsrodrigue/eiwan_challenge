@@ -13,6 +13,19 @@ export const createChallenge = async (challenge: Challenge) => {
     } catch (error) {
         console.error("Error while creating challenge: ", error);
     }
+}
 
+export const getChallengesAsChallenger = async (user_id: string) => {
+    try {
 
+        const { data, error } = await supabase.from("challenges")
+            .select("*")
+            .eq('challenger', user_id);
+
+        if (error) throw error;
+        if (data) return data;
+
+    } catch (error) {
+        console.error("Error while requesting challenges where user participates: ", error);
+    }
 }

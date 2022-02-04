@@ -12,6 +12,7 @@ import App from './App';
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 import ChallengeForm from './pages/dashboard/challenge_form';
+import Home from './pages/home/home';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<App />}>
+            <Route path="/" element={<Home />} />
             <Route path="/auth/register" element={<Register />} />
             <Route path="/auth/login" element={<Login />} />
             <Route path="/challenges/new" element={<ChallengeForm />} />

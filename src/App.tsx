@@ -64,7 +64,7 @@ const App: React.FC<Props> = () => {
       </Drawer>
 
       {/* Page Content */}
-      <Box sx={{ padding: 1 }}>
+      <Box sx={{ padding: 1, backgroundColor: 'dimgrey' }}>
         <Outlet />
       </Box>
 

@@ -1,6 +1,7 @@
 import { Avatar, Box, Divider, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
+import { Home as HomeIcon } from 'react-feather';
 
 
 const sidebarLinks = [
@@ -8,21 +9,43 @@ const sidebarLinks = [
         title: "Home",
         to: "/",
         auth: true,
+        icon: <HomeIcon/>,
     },
     {
-        title: "Challenges",
-        to: "/challenges/new",
+        title: "Drafts",
+        to: "/drafts",
         auth: true,
+        icon: <HomeIcon/>,
     },
     {
-        title: "Notifications",
-        to: "/user/notifications",
+        title: "Proposals",
+        to: "/proposals",
         auth: true,
+        icon: <HomeIcon/>,
+    },
+    {
+        title: "My Challenges",
+        to: "/user/challenges",
+        auth: true,
+        icon: <HomeIcon/>,
+    },
+    {
+        title: "Archives",
+        to: "/user/archives",
+        auth: true,
+        icon: <HomeIcon/>,
+    },
+    {
+        title: "Leaderboard",
+        to: "/leaderboard",
+        auth: true,
+        icon: <HomeIcon/>,
     },
     {
         title: "Profile",
         to: "/user/profile",
         auth: true,
+        icon: <HomeIcon/>,
     },
 ]
 
@@ -49,17 +72,26 @@ export const Sidebar: React.FC = () => {
 
             <List>
                 {sidebarLinks.map((link, index) => {
-                    const { title, to, auth } = link;
-                    return (<ListItem button key={index}>
+                    const { title, to, auth, icon } = link;
+                    return (
+
+                                            <Link to={to}>
+                    <ListItem button key={index}>
                         {
                             auth ? (
                                 <>
                                     {isAuthenticated && (
-                                        <ListItemText>
-                                            <Link to={to}>
+                                    <Box sx={{ display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    width: '100%',}}
+              
+                                    >
+                                    <Box sx={{marginRight: '1em'}}>
+                                    {icon}
+                                    </Box>
                                                 {title}
-                                            </Link>
-                                        </ListItemText>
+                                    </Box>
                                     )}
                                 </>
                             ) : (
@@ -70,7 +102,9 @@ export const Sidebar: React.FC = () => {
                                 </ListItemText>
                             )
                         }
-                    </ListItem>);
+                    </ListItem>
+                                            </Link>
+                    );
                 })}
             </List >
 
